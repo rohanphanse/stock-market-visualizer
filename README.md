@@ -1,5 +1,5 @@
 # Stock Market Visualizer
-**Prelude:** This was one of the first major Python projects I built, all the way back in 2020. I had posted this project to replit and am now adding it to my github, with the original writeup below (edited slightly for clarity). I really enjoyed coding this project and working with the yfinance library, even though half of my time was spent debugging it 🥲, and I hope you all enjoy using *Stock Market Visualizer*!
+**Prelude:** This was one of the first major Python projects I built, all the way back in 2020. I had posted this project to replit and am now adding it to my github, with the original writeup below (edited slightly for clarity). I really enjoyed coding this project and working with the yfinance library, even though half of my time was spent debugging it 🥲. I hope you all enjoy using *Stock Market Visualizer*!
 
 Link to original replit post: https://replit.com/talk/share/Stock-Market-Visualizer/42786
 
