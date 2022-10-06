@@ -10,7 +10,11 @@ Link to original replit post: https://replit.com/talk/share/Stock-Market-Visuali
 Hi everyone, I'm proud to present Stock Market Visualizer, the best way to view stock/ETF statistics from the comfort of the Python terminal. Search by ticker with live dropdown results and view detailed graphs with information. This was a very cool project to make as it combined my interests in stocks/investing and programming. It was also pretty mathematically challenging to create the graphs.
 
 ## How to use
-Let's say you want to see statistics for an Apple share. Start by typing apple. Then use the dropdown results to figure out the stock ticker - in this case AAPL. After typing the ticker, a graph will pop up with information below. Here's an explanation to help you better understand the information:
+Let's say you want to see statistics for an Apple share. Start by typing apple. Then use the dropdown results to figure out the stock ticker - in this case AAPL. 
+
+![Search apple](https://raw.githubusercontent.com/rohanphanse/stock-market-visualizer/main/search-apple.png)
+
+After typing the ticker, a graph will pop up with information below. Here's an explanation to help you better understand the information:
 + Ticker: Unique series of letters assigned to security for trading purposes
 + Name: Name of company or security
 + Sector: Sections of an industry or the overall economy
@@ -22,5 +26,4 @@ Let's say you want to see statistics for an Apple share. Start by typing apple. 
 + Trailing P/E: P/E based off last 12 months
 + Forward P/E: P/E based off of projected 12 months
 
-
-![Screenshot 2020-06-24 at 1.02.40 PM](https://storage.googleapis.com/replit/images/1593028979938_596436f0ac593ced09d1c900077df5d9.png)
+![Graph and stats for Apple stock](https://raw.githubusercontent.com/rohanphanse/stock-market-visualizer/main/apple-stats.png)
