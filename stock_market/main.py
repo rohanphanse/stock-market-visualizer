@@ -8,6 +8,7 @@ import readchar
 import time
 import locale
 import os
+import re
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 tickers_path = os.path.join(base_dir, "tickers.json")
@@ -33,6 +34,8 @@ except locale.Error:
 def rgb(rgb_list):
     r, g, b = rgb_list
     return f"\033[38;2;{r};{g};{b}m"
+
+ANSI_RE = re.compile(r"\x1b\[[0-9;]*m")
 
 # Search dict for query
 def search(query):
@@ -107,6 +110,7 @@ reset = "\033[0m"
 def stock_entry(ticker, days):
     si = [f"\nTicker: {ticker.upper()}"] 
     days = days if days < 60 else 60
+    graph_lines = []
 
     # Graph
     try:
@@ -123,8 +127,9 @@ def stock_entry(ticker, days):
         start_date = str(history.index[0]).split()[0]
         end_date = str(history.index[-1]).split()[0]
         stock_closes = []
-        for i in range(len(history["Close"])):
-            stock_closes.append(history["Close"][i])
+        closes = history["Close"]
+        for i in range(len(closes)):
+            stock_closes.append(closes.iloc[i])
 
         si.append(f"\nPrevious Close: {green}{fm(stock_closes[-2])}{reset} USD")
         si.append(f"Current Close: {green}{fm(stock_closes[-1])}{reset} USD") 
@@ -161,11 +166,9 @@ def stock_entry(ticker, days):
                     graph[20 - i].append(" " * increment_x)
 
         for row in graph:
-            print("".join(row))
-            time.sleep(0.03)
+            graph_lines.append("".join(row))
     except Exception as e:
-        print("No graph")
-        print(e)
+        graph_lines = ["No graph", str(e)]
 
     try:
         stock_info = stock.info
@@ -204,16 +207,35 @@ def stock_entry(ticker, days):
     except:
         si.insert(1, f"Name: {ticker_data[ticker.upper()]}")
 
+    text_lines = []
     for line in si:
-        print(line)
-        time.sleep(0.03)
+        if line.startswith("\n"):
+            text_lines.append("")
+            line = line[1:]
+        text_lines.append(line)
+    if graph_lines:
+        left_width = max(len(ANSI_RE.sub("", line)) for line in graph_lines)
+        total_lines = max(len(graph_lines), len(text_lines))
+        for i in range(total_lines):
+            left = graph_lines[i] if i < len(graph_lines) else ""
+            right = text_lines[i] if i < len(text_lines) else ""
+            if left:
+                padding = " " * max(0, left_width - len(ANSI_RE.sub("", left)))
+                print(f"{left}{padding}  {right}")
+            else:
+                print(right)
+            time.sleep(0.02)
+    else:
+        for line in text_lines:
+            print(line)
+            time.sleep(0.02)
 
 def loop():
     try:
         while 1:
             clear()
             result = stock_search()
-            clear()
+            print()
             if check_query(result):
                 stock_entry(result, 30)
             else:
