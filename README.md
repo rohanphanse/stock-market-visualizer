@@ -27,3 +27,17 @@ After typing the ticker, a graph will pop up with information below. Here's an e
 + Forward P/E: P/E based off of projected 12 months
 
 ![Graph and stats for Apple stock](https://raw.githubusercontent.com/rohanphanse/stock-market-visualizer/main/images/apple-stats.png)
+
+## Browser Terminal (xterm.js)
+Run the app in a browser with a real terminal emulator:
+
+```bash
+poetry install
+poetry run stock-market-web
+```
+
+Then open `http://localhost:8000`.
+
+Notes:
+- This uses a PTY per browser tab and works best on macOS/Linux. Windows may need WSL.
+- The UI loads xterm.js from a CDN, so an internet connection is required for the frontend assets.

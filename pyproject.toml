@@ -4,16 +4,23 @@ version = "0.1.0"
 description = ""
 authors = ["Rohan Phanse"]
 packages = [{ include = "stock_market" }]
-include = ["stock_market/tickers.json", "stock_market/tickers.txt"]
+include = [
+  "stock_market/tickers.json",
+  "stock_market/tickers.txt",
+  "stock_market/static/index.html"
+]
 
 [tool.poetry.scripts]
 stock-market = "stock_market.main:main"
+stock-market-web = "stock_market.web:main"
 
 [tool.poetry.dependencies]
 python = "^3.8"
 lxml = "^4.5.1"
 readchar = "^2.0.1"
 yfinance = "^1.0.0"
+fastapi = "^0.103.0"
+uvicorn = {version = "^0.23.0", extras = ["standard"]}
 
 [tool.poetry.group.dev.dependencies]
 

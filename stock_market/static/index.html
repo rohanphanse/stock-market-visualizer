@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Stock Market Visualizer Terminal</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.css"
+    />
+    <style>
+      :root {
+        color-scheme: only light;
+      }
+
+      body {
+        margin: 0;
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+          "Courier New", monospace;
+        background: radial-gradient(circle at top, #f9f4e8, #e6eef6 55%, #dfe4f0 100%);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #1b1b1b;
+      }
+
+      .shell {
+        width: min(1100px, 92vw);
+        height: min(720px, 82vh);
+        border-radius: 16px;
+        background: #0f1216;
+        box-shadow: 0 30px 60px rgba(15, 18, 22, 0.25);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 14px;
+        color: #d6dde6;
+      }
+
+      .status {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: #7bdff2;
+      }
+
+      #terminal {
+        flex: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <div class="header">
+        <div>Stock Market Visualizer</div>
+        <div class="status" id="status">Connecting...</div>
+      </div>
+      <div id="terminal"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.js"></script>
+    <script>
+      const statusEl = document.getElementById("status");
+      const term = new Terminal({
+        cursorBlink: true,
+        fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+        fontSize: 11,
+        theme: {
+          background: "#0f1216",
+          foreground: "#d6dde6",
+          cursor: "#7bdff2",
+        },
+      });
+      const fitAddon = new FitAddon.FitAddon();
+      term.loadAddon(fitAddon);
+      term.open(document.getElementById("terminal"));
+      fitAddon.fit();
+
+      const protocol = location.protocol === "https:" ? "wss" : "ws";
+      const socket = new WebSocket(`${protocol}://${location.host}/ws`);
+
+      socket.addEventListener("open", () => {
+        statusEl.textContent = "Live";
+      });
+
+      socket.addEventListener("message", (event) => {
+        term.write(event.data);
+      });
+
+      socket.addEventListener("close", () => {
+        statusEl.textContent = "Disconnected";
+      });
+
+      socket.addEventListener("error", () => {
+        statusEl.textContent = "Error";
+      });
+
+      term.onData((data) => {
+        socket.send(data);
+      });
+
+      window.addEventListener("resize", () => {
+        fitAddon.fit();
+      });
+    </script>
+  </body>
+</html>
