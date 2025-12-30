@@ -21,7 +21,13 @@ def clear():
     print("\033c", end = "")
 
 # Set locale for currency
-locale.setlocale(locale.LC_ALL, '')
+try:
+    locale.setlocale(locale.LC_ALL, "")
+except locale.Error:
+    try:
+        locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
+    except locale.Error:
+        locale.setlocale(locale.LC_ALL, "C")
 
 # RGB ANSI code formatter
 def rgb(rgb_list):
@@ -78,7 +84,10 @@ def check_query(query):
 
 # Format money
 def fm(value):
-    return locale.currency(value, symbol = False, grouping = True)
+    try:
+        return locale.currency(value, symbol = False, grouping = True)
+    except (ValueError, locale.Error):
+        return f"{value:,.2f}"
 
 days_to_scale = {
     5 : 4,
@@ -119,7 +128,7 @@ def stock_entry(ticker, days):
 
         si.append(f"\nPrevious Close: {green}{fm(stock_closes[-2])}{reset} USD")
         si.append(f"Current Close: {green}{fm(stock_closes[-1])}{reset} USD") 
-        difference = round((stock_closes[-1] / stock_closes[-2] - 1) * 100, 3)
+        difference = round((stock_closes[-1] / stock_closes[-2] - 1) * 100, 2)
         si.append(f"Percent Change: {green if difference >= 0 else red}{difference}{reset} %")
 
         change = stock_closes[-1] - stock_closes[0]
