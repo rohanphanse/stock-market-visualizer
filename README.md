@@ -12,7 +12,7 @@ Hi everyone, I'm proud to present Stock Market Visualizer, the best way to view 
 ## How to use
 Let's say you want to see statistics for an Apple share. Start by typing apple. Then use the dropdown results to figure out the stock ticker - in this case AAPL. 
 
-![Search apple](https://raw.githubusercontent.com/rohanphanse/stock-market-visualizer/main/search-apple.png)
+![Search apple](https://raw.githubusercontent.com/rohanphanse/stock-market-visualizer/main/images/search-apple.png)
 
 After typing the ticker, a graph will pop up with information below. Here's an explanation to help you better understand the information:
 + Ticker: Unique series of letters assigned to security for trading purposes
@@ -26,4 +26,4 @@ After typing the ticker, a graph will pop up with information below. Here's an e
 + Trailing P/E: P/E based off last 12 months
 + Forward P/E: P/E based off of projected 12 months
 
-![Graph and stats for Apple stock](https://raw.githubusercontent.com/rohanphanse/stock-market-visualizer/main/apple-stats.png)
+![Graph and stats for Apple stock](https://raw.githubusercontent.com/rohanphanse/stock-market-visualizer/main/images/apple-stats.png)
