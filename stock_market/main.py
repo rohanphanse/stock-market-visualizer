@@ -239,7 +239,11 @@ def loop():
             if check_query(result):
                 stock_entry(result, 30)
             else:
-                print("No stocks found")
+                results = search(result)
+                if results:
+                    stock_entry(results[0], 30)
+                else:
+                    print("No stocks found")
             print("\nSearch again (y/n):")
             cont = readchar.readkey()
             if cont == "\x03":
