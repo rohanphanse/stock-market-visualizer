@@ -235,7 +235,8 @@ def loop():
         while 1:
             clear()
             result = stock_search()
-            print()
+            clear()
+            print(f"Search by ticker: {result}\n")
             if check_query(result):
                 stock_entry(result, 30)
             else:
